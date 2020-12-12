@@ -29,7 +29,14 @@ window.EmbedPlayer = class EmbedPlayer extends Player
         else
             @player = @loadIframe(embed)
 
-        removeOld(@player)
+        if data.type == 'tw'
+            embed2 = embed
+            embed2.src = "https://www.twitch.tv/embed/" + data.id + "/chat?parent=" + location.hostname
+            removeOld(@player)
+            chatIframe = @loadChatIframe(embed)
+            chatIframe.appendTo($('#twitchchat'));
+        else
+            removeOld(@player)
 
     loadObject: (embed) ->
         object = $('<object/>').attr(
@@ -63,4 +70,24 @@ window.EmbedPlayer = class EmbedPlayer extends Player
                 allowfullscreen: '1'
             )
 
+            return iframe
+
+    loadChatIframe: (embed) ->
+        if embed.src.indexOf('http:') == 0 and location.protocol == 'https:'
+            if @__proto__.mixedContentError?
+                error = @__proto__.mixedContentError
+            else
+                error = DEFAULT_ERROR
+            alert = makeAlert('Mixed Content Error', error, 'alert-danger')
+                .removeClass('col-md-12')
+            alert.find('.close').remove()
+            return alert
+        else
+            iframe = $('<iframe/>').attr(
+                    src: embed.src
+                    height: '500'
+                    id: 'chat_embed'
+                    scrolling: 'no'
+                    frameborder: '0'
+                )
             return iframe

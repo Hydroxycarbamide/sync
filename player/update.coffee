@@ -107,6 +107,7 @@ window.handleMediaUpdate = (data) ->
 
 window.removeOld = (replace) ->
     $('#soundcloud-volume-holder').remove()
+    $('#twitchchat').children().remove();
     replace ?= $('<div/>').addClass('embed-responsive-item')
     old = $('#ytapiplayer')
     replace.insertBefore(old)
