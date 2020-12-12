@@ -30,8 +30,7 @@ window.EmbedPlayer = class EmbedPlayer extends Player
             @player = @loadIframe(embed)
 
         if data.type == 'tw'
-            embed2 = embed
-            embed2.src = "https://www.twitch.tv/embed/" + data.id + "/chat?parent=" + location.hostname
+            embed.src = "https://www.twitch.tv/embed/" + data.id + "/chat?parent=" + location.hostname
             removeOld(@player)
             chatIframe = @loadChatIframe(embed)
             chatIframe.appendTo($('#twitchchat'));
